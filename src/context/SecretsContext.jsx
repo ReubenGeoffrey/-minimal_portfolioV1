@@ -47,7 +47,6 @@ export const SecretsProvider = ({ children }) => {
     };
 
     const unlockSecret = (secretType) => {
-        // On mobile, ignore konami secret
         if (!isDesktop && secretType === 'konami') return;
 
         if (!foundSecrets[secretType]) {
@@ -55,13 +54,12 @@ export const SecretsProvider = ({ children }) => {
                 ...prev,
                 [secretType]: true
             }));
-
-            // Count only relevant secrets based on device
+            
             const foundCount = Object.entries(foundSecrets)
                 .filter(([key, value]) => isDesktop || (key !== 'konami'))
                 .filter(([_, value]) => value)
                 .length + 1;
-            
+
             const messages = {
                 persona: "Yohohohoho, you have a good observation haki!",
                 konami: isDesktop ? "Bankai!, Sakasama No Seikai" : "",

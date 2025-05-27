@@ -81,7 +81,7 @@ const Hero = ({ wrapperRef }) => {
         timeline.current = gsap.timeline({
             defaults: {
                 ease: 'power2.inOut',
-                duration: 0.8
+                duration: 0.5
             }
         });
 
@@ -103,30 +103,17 @@ const Hero = ({ wrapperRef }) => {
             }, index * 0.1);
         });
 
-        // Add scroll-based animations only if needed
+        // Add scroll-based reveal/hide only for desktop
         if (isDesktop) {
+            timeline.current.pause();
             ScrollTrigger.create({
                 trigger: containerRef.current,
                 start: 'top center',
                 end: 'bottom top',
-                onLeaveBack: () => {
-                    gsap.to(refs.current, {
-                        opacity: 0,
-                        filter: "blur(5px)",
-                        y: "30px",
-                        duration: 0.3,
-                        stagger: 0.1
-                    });
-                },
-                onEnter: () => {
-                    gsap.to(refs.current, {
-                        opacity: 1,
-                        filter: "none",
-                        y: "0px",
-                        duration: 0.3,
-                        stagger: 0.1
-                    });
-                }
+                onEnter: () => timeline.current.play(),
+                onLeave: () => timeline.current.reverse(),
+                onEnterBack: () => timeline.current.play(),
+                onLeaveBack: () => timeline.current.reverse()
             });
         }
     };
