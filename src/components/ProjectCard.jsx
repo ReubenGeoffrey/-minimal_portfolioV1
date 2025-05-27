@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
-import { SiReact, SiNodedotjs, SiMermaid , SiVercel, SiVite, SiSqlalchemy, SiPython, SiJavascript, SiTypescript, SiHtml5, SiCss3, SiGithub, SiMongodb, SiStreamlit, SiCloudinary, SiGreensock } from 'react-icons/si';
+import { SiReact, SiNodedotjs, SiMermaid, SiVercel, SiVite, SiSqlalchemy, SiPython, SiJavascript, SiTypescript, SiHtml5, SiCss3, SiGithub, SiMongodb, SiStreamlit, SiCloudinary, SiGreensock } from 'react-icons/si';
 import { FaDatabase, FaCode, FaLock } from 'react-icons/fa';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -36,6 +36,7 @@ const ProjectCard = ({props, isLoaded}) => {
   const textRefs = useRef([]);
   const imageRef = useRef(null);
   const techStackRefs = useRef([]);
+  const isDesktop = window.innerWidth >= 1024;
 
   const addTextRef = (el) => {
     if (el && !textRefs.current.includes(el)) {
@@ -52,10 +53,11 @@ const ProjectCard = ({props, isLoaded}) => {
   useGSAP(() => {
     if (!isLoaded) return;
 
+    // Initial states
     gsap.set(textRefs.current, {
       opacity: 0,
-      y: 30,
-      filter: "blur(5px)"
+      y: isDesktop ? 30 : 0,
+      filter: isDesktop ? "blur(5px)" : "none"
     });
 
     gsap.set(imageRef.current, {
@@ -66,14 +68,16 @@ const ProjectCard = ({props, isLoaded}) => {
     if (techStackRefs.current.length > 0) {
       gsap.set(techStackRefs.current, {
         opacity: 0,
-        y: 20,
-        filter: "blur(5px)"
+        y: isDesktop ? 20 : 0,
+        filter: isDesktop ? "blur(5px)" : "none"
       });
+
+      // Tech stack animations
       techStackRefs.current.forEach((el, index) => {
         gsap.to(el, {
           opacity: 1,
           y: 0,
-          filter: "blur(0px)",
+          filter: "none",
           duration: 0.6,
           ease: "power2.out",
           delay: index * 0.1,
@@ -86,11 +90,12 @@ const ProjectCard = ({props, isLoaded}) => {
       });
     }
 
+    // Text animations
     textRefs.current.forEach((el, index) => {
       gsap.to(el, {
         opacity: 1,
         y: 0,
-        filter: "blur(0px)",
+        filter: "none",
         duration: 0.8,
         ease: "power2.out",
         delay: index * 0.2,
@@ -102,6 +107,7 @@ const ProjectCard = ({props, isLoaded}) => {
       });
     });
 
+    // Image animation
     gsap.to(imageRef.current, {
       scale: 1,
       opacity: 1,
@@ -113,6 +119,10 @@ const ProjectCard = ({props, isLoaded}) => {
         toggleActions: "play none none reverse"
       }
     });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
   }, { scope: cardRef, dependencies: [isLoaded] });
 
   if (!isLoaded) {

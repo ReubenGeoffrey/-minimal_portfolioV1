@@ -6,120 +6,106 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin(ScrollTrigger);
 
 const About = () => {
-
   const blurRefs = useRef([]); 
-  const fadeRefs = useRef([]); 
+  const fadeRefs = useRef([]);
+  const isDesktop = window.innerWidth >= 1024;
 
-    const addBlurRef = (el) => {
-        if (el && !blurRefs.current.includes(el)) {
-            blurRefs.current.push(el);
+  const addBlurRef = (el) => {
+    if (el && !blurRefs.current.includes(el)) {
+      blurRefs.current.push(el);
+    }
+  };
+
+  const addFadeRef = (el) => {
+    if (el && !fadeRefs.current.includes(el)) {
+      fadeRefs.current.push(el);
+    }
+  };
+
+  useEffect(() => {
+    gsap.set(blurRefs.current, {
+      opacity: 0,
+      filter: "blur(5px)",
+      y: "30px"
+    });
+
+    blurRefs.current.forEach((el, index) => {
+      gsap.to(
+        el,
+        {
+          ease: 'power2.inOut',
+          duration: 0.5,
+          delay: 0.2 * index,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top bottom',
+            end: 'bottom top',
+            toggleActions: "play reverse play reverse",
+            // More efficient animation on mobile
+            onEnter: () => {
+              gsap.to(el, {
+                opacity: 1,
+                filter: isDesktop ? "blur(0px)" : "none",
+                y: "0px",
+                duration: 0.5,
+              });
+            },
+            onLeave: () => {
+              gsap.to(el, {
+                opacity: 0,
+                filter: isDesktop ? "blur(5px)" : "none",
+                y: "30px",
+                duration: 0.5,
+              });
+            }
+          }
         }
-    };
+      );
+    });
 
-    const addFadeRef = (el) => {
-        if (el && !fadeRefs.current.includes(el)) {
-            fadeRefs.current.push(el);
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, []);
+
+  useEffect(() => {
+    gsap.set(fadeRefs.current, {
+      opacity: 0,
+    });
+
+    fadeRefs.current.forEach((el, index) => {
+      gsap.to(
+        el,
+        {
+          ease: 'power2.inOut',
+          duration: 0.5,
+          delay: 0.2 * index,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top bottom',
+            end: 'bottom top',
+            toggleActions: "play reverse play reverse",
+            onEnter: () => {
+              gsap.to(el, {
+                opacity: 1,
+                duration: 0.5,
+              });
+            },
+            onLeave: () => {
+              gsap.to(el, {
+                opacity: 0,
+                duration: 0.5,
+              });
+            }
+          }
         }
+      );
+    });
+
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
-
-    useEffect(() => {
-        gsap.set(blurRefs.current, {
-            opacity: 0,
-            filter: "blur(5px)",
-            y: "30px"
-        });
-
-        blurRefs.current.forEach((el, index) => {
-            gsap.to(
-                el,
-                {
-                    ease: 'power2.inOut',
-                    duration: 0.5,
-                    delay: 0.2 * index,
-                    scrollTrigger: {
-                        trigger: el,  
-                        start: 'top bottom', 
-                        end: 'bottom top',
-                        onEnter: () => {
-                          gsap.to(el, {
-                              opacity: 1,
-                              filter: "blur(0px)",
-                              y: "0px",
-                              duration: 0.5,
-                          });
-                      },
-                        onLeave: () => {
-                            gsap.to(el, {
-                                opacity: 0,
-                                filter: "blur(5px)",
-                                y: "30px",
-                                duration: 0.5,
-                            });
-                        },
-                        onLeaveBack: () => {
-                            gsap.to(el, {
-                                opacity: 0,
-                                filter: "blur(5px)",
-                                y: "30px",
-                                duration: 0.5,
-                            });
-                        },
-                        onEnterBack: () => {
-                            gsap.to(el, {
-                                opacity: 1,
-                                filter: "blur(0px)",
-                                y: "0px",
-                                duration: 0.5,
-                            });
-                        }
-                    },
-                }
-            );
-        });
-    }, []);
-
-    useEffect(() => {
-        gsap.set(fadeRefs.current, {
-            opacity: 0,
-        });
-
-        fadeRefs.current.forEach((el, index) => {
-            gsap.to(
-                el,
-                {
-                    ease: 'power2.inOut',
-                    duration: 0.5,
-                    delay: 0.2 * index,
-                    scrollTrigger: {
-                        trigger: el,  
-                        start: 'top bottom', 
-                        end: 'bottom top',
-                        onEnter: () => {
-                          gsap.to(el, {
-                              opacity: 1,
-                          });
-                      },
-                        onLeave: () => {
-                            gsap.to(el, {
-                                opacity: 0,
-                            });
-                        },
-                        onLeaveBack: () => {
-                            gsap.to(el, {
-                                opacity: 0,
-                            });
-                        },
-                        onEnterBack: () => {
-                            gsap.to(el, {
-                                opacity: 1,
-                            });
-                        }
-                    },
-                }
-            );
-        });
-    }, []);
-
+  }, []);
 
   return (
     <div className='min-h-screen w-full flex flex-col md:flex-row justify-between md:px-32'>
@@ -137,7 +123,7 @@ const About = () => {
           </span>
         </div>
       </div>
-      <div className='h-full  w-full md:w-2/6 flex flex-col gap-10 items-center'>
+      <div className='h-full w-full md:w-2/6 flex flex-col gap-10 items-center'>
         <div ref={addFadeRef} className='mt-10 bg-white bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm'>
           <div className="py-2 text-2xl font-semibold text-zinc-700 md:text-[1.5vw] flex flex-col gap-5">
             Experience
