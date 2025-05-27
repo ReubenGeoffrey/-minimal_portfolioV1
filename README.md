@@ -1,8 +1,12 @@
-# Minimal Portfolio 
+# Portfolio Website 🚀
 
 A modern, interactive portfolio website built with React, Vite, and GSAP. Features smooth animations, responsive design, and some hidden secrets waiting to be discovered!
 
-## Features
+## 🖼️ Preview
+
+![Portfolio Preview](/project.png)
+
+## 🌟 Features
 
 - **Modern Design**: Clean, minimalist interface with a focus on user experience
 - **Responsive Layout**: Seamlessly adapts to all screen sizes
