@@ -26,8 +26,14 @@ const Hero = ({ wrapperRef }) => {
     const textRef = useRef(null);
     const helloRef = useRef(null);
     const splitInstance = useRef(null);
+    const isDesktop = window.innerWidth >= 1024;
+    const timeline = useRef(null);
 
     const handlePersonaChange = (personaId) => {
+        if (timeline.current) {
+            timeline.current.kill();
+        }
+        
         setActivePersona(personaId);
         if (personaId === 'secret') {
             unlockSecret('persona');
@@ -41,7 +47,10 @@ const Hero = ({ wrapperRef }) => {
     };
 
     const animateElements = () => {
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        if (timeline.current) {
+            timeline.current.kill();
+        }
+
         refs.current = [];
 
         if (splitInstance.current) {
@@ -68,50 +77,65 @@ const Hero = ({ wrapperRef }) => {
             elements.forEach(el => addRef(el));
         }
 
-        gsap.set(refs.current, {
-            opacity: 0,
-            filter: "blur(5px)",
-            y: "30px",
+        // Create a new timeline for the animations
+        timeline.current = gsap.timeline({
+            defaults: {
+                ease: 'power2.inOut',
+                duration: 0.8
+            }
         });
 
-        refs.current.forEach((el, index) => {
-            gsap.to(
-                el, 
-                {
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    y: "0px",
-                    ease: 'power2.inOut',
-                    duration: 1,
-                    delay: index * 0.2, 
-                    scrollTrigger: {
-                        trigger: el,  
-                        start: 'top bottom', 
-                        end: 'bottom 10%',
-                        onLeave: () => {
-                            gsap.to(el, {
-                                opacity: 0,
-                                filter: "blur(5px)",
-                                y: "30px",
-                                duration: 0.5,
-                            });
-                        },
-                        onEnterBack: () => {
-                            gsap.to(el, {
-                                opacity: 1,
-                                filter: "blur(0px)",
-                                y: "0px",
-                                duration: 0.5,
-                            });
-                        }
-                    }
-                }
-            );
+        // Set initial states
+        gsap.set(refs.current, {
+            opacity: 0,
+            filter: isDesktop ? "blur(5px)" : "none",
+            y: isDesktop ? "30px" : "0px",
         });
+
+        // Animate each element with the timeline
+        refs.current.forEach((el, index) => {
+            timeline.current.to(el, {
+                opacity: 1,
+                filter: "none",
+                y: "0px",
+                duration: 0.5,
+                delay: index * 0.1
+            }, index * 0.1);
+        });
+
+        // Add scroll-based animations only if needed
+        if (isDesktop) {
+            ScrollTrigger.create({
+                trigger: containerRef.current,
+                start: 'top center',
+                end: 'bottom top',
+                onLeaveBack: () => {
+                    gsap.to(refs.current, {
+                        opacity: 0,
+                        filter: "blur(5px)",
+                        y: "30px",
+                        duration: 0.3,
+                        stagger: 0.1
+                    });
+                },
+                onEnter: () => {
+                    gsap.to(refs.current, {
+                        opacity: 1,
+                        filter: "none",
+                        y: "0px",
+                        duration: 0.3,
+                        stagger: 0.1
+                    });
+                }
+            });
+        }
     };
 
     useEffect(() => {
         const handleResize = () => {
+            if (timeline.current) {
+                timeline.current.kill();
+            }
             animateElements();
         };
 
@@ -121,12 +145,15 @@ const Hero = ({ wrapperRef }) => {
             if (splitInstance.current) {
                 splitInstance.current.revert();
             }
+            if (timeline.current) {
+                timeline.current.kill();
+            }
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
         };
     }, []);
 
     useEffect(() => {
         if (textRef.current) {
-            textRef.current.textContent = introLinesByPersona[activePersona];
             animateElements();
         }
     }, [activePersona]);
