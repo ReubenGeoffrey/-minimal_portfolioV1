@@ -11,7 +11,9 @@ export const SecretsProvider = ({ children }) => {
         footer: false
     });
 
-    const totalSecrets = 3;
+    // Check if device is desktop
+    const isDesktop = window.innerWidth >= 1024;
+    const totalSecrets = isDesktop ? 3 : 2;
 
     const triggerConfetti = () => {
         const duration = 3 * 1000;
@@ -45,23 +47,32 @@ export const SecretsProvider = ({ children }) => {
     };
 
     const unlockSecret = (secretType) => {
+        // On mobile, ignore konami secret
+        if (!isDesktop && secretType === 'konami') return;
+
         if (!foundSecrets[secretType]) {
             setFoundSecrets(prev => ({
                 ...prev,
                 [secretType]: true
             }));
 
-            const foundCount = Object.values(foundSecrets).filter(Boolean).length + 1;
+            // Count only relevant secrets based on device
+            const foundCount = Object.entries(foundSecrets)
+                .filter(([key, value]) => isDesktop || (key !== 'konami'))
+                .filter(([_, value]) => value)
+                .length + 1;
             
             const messages = {
                 persona: "Yohohohoho, you have a good observation haki!",
-                konami: "Bankai!, Sakasama No Seikai",
+                konami: isDesktop ? "Bankai!, Sakasama No Seikai" : "",
                 footer: "Is this a hint ??, Boa Hancock!"
             };
 
-            toast(`${messages[secretType]} (${foundCount} of ${totalSecrets} secrets found)`, {
-                duration: 4000,
-            });
+            if (messages[secretType]) {
+                toast(`${messages[secretType]} (${foundCount} of ${totalSecrets} secrets found)`, {
+                    duration: 4000,
+                });
+            }
 
             if (foundCount === totalSecrets) {
                 setTimeout(() => {
