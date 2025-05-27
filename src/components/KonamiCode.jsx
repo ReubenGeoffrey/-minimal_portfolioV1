@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useSecrets } from '../context/SecretsContext';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -7,15 +7,14 @@ gsap.registerPlugin(ScrollTrigger);
 
 const KonamiCode = ({ wrapperRef }) => {
     const { unlockSecret } = useSecrets();
-    const [touchSequence, setTouchSequence] = useState([]);
     const [isInverted, setIsInverted] = useState(false);
-    const touchStartY = useRef(null);
-    const touchStartX = useRef(null);
-    const lastTouchTime = useRef(0);
-    const SWIPE_THRESHOLD = 50;
-    const DOUBLE_TAP_DELAY = 300;
+
+    // Check if device is desktop
+    const isDesktop = window.innerWidth >= 1024;
 
     const toggleRotation = () => {
+        if (!isDesktop) return; // Only allow rotation on desktop
+        
         setIsInverted(prev => !prev);
         
         if (!wrapperRef.current) return;
@@ -34,6 +33,8 @@ const KonamiCode = ({ wrapperRef }) => {
     };
 
     useEffect(() => {
+        if (!isDesktop) return; // Only add keyboard listeners on desktop
+
         const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
         let konamiIndex = 0;
 
@@ -53,71 +54,14 @@ const KonamiCode = ({ wrapperRef }) => {
             }
         };
 
-        const handleTouchStart = (e) => {
-            touchStartY.current = e.touches[0].clientY;
-            touchStartX.current = e.touches[0].clientX;
-        };
-
-        const handleTouchEnd = (e) => {
-            if (!touchStartY.current || !touchStartX.current) return;
-
-            const touchEndY = e.changedTouches[0].clientY;
-            const touchEndX = e.changedTouches[0].clientX;
-            const deltaY = touchStartY.current - touchEndY;
-            const deltaX = touchStartX.current - touchEndX;
-            const currentTime = new Date().getTime();
-            
-            let gesture = '';
-            if (Math.abs(deltaY) > Math.abs(deltaX)) {
-                if (Math.abs(deltaY) > SWIPE_THRESHOLD) {
-                    gesture = deltaY > 0 ? 'ArrowUp' : 'ArrowDown';
-                }
-            } else {
-                if (Math.abs(deltaX) > SWIPE_THRESHOLD) {
-                    gesture = deltaX > 0 ? 'ArrowLeft' : 'ArrowRight';
-                }
-            }
-
-            if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) {
-                if (currentTime - lastTouchTime.current < DOUBLE_TAP_DELAY) {
-                    gesture = touchSequence.length % 2 === 0 ? 'b' : 'a';
-                }
-                lastTouchTime.current = currentTime;
-            }
-
-            if (gesture) {
-                const newSequence = [...touchSequence, gesture];
-                setTouchSequence(newSequence);
-
-                const matchesKonamiCode = newSequence.every((gesture, index) => 
-                    gesture.toLowerCase() === konamiCode[index].toLowerCase()
-                );
-
-                if (matchesKonamiCode && newSequence.length === konamiCode.length) {
-                    unlockSecret('konami');
-                    toggleRotation();
-                    setTouchSequence([]);
-                } else if (newSequence.length >= konamiCode.length) {
-                    setTouchSequence([]);
-                }
-            }
-
-            touchStartY.current = null;
-            touchStartX.current = null;
-        };
-
         window.addEventListener('keydown', handleKeyDown);
-        window.addEventListener('touchstart', handleTouchStart);
-        window.addEventListener('touchend', handleTouchEnd);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [unlockSecret, isDesktop]);
 
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-            window.removeEventListener('touchstart', handleTouchStart);
-            window.removeEventListener('touchend', handleTouchEnd);
-        };
-    }, [unlockSecret, touchSequence, isInverted]);
-
+    // Add escape key handler for desktop only
     useEffect(() => {
+        if (!isDesktop) return;
+
         const handleToggleShortcut = (e) => {
             if (e.key === 'Escape') {
                 toggleRotation();
@@ -126,7 +70,7 @@ const KonamiCode = ({ wrapperRef }) => {
 
         window.addEventListener('keydown', handleToggleShortcut);
         return () => window.removeEventListener('keydown', handleToggleShortcut);
-    }, [isInverted]);
+    }, [isInverted, isDesktop]);
 
     return null;
 };
