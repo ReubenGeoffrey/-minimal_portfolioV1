@@ -3,7 +3,6 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SplitText } from 'gsap/SplitText'
-import { Toaster } from 'react-hot-toast'
 import { useSecrets } from '../context/SecretsContext'
 import KonamiCode from './KonamiCode'
 
@@ -19,7 +18,7 @@ const personas = [
     { id: 'secret', label: '' }
 ];
 
-const Hero = () => {
+const Hero = ({ wrapperRef }) => {
     const [activePersona, setActivePersona] = useState('default');
     const { unlockSecret } = useSecrets();
     const refs = useRef([]);
@@ -134,21 +133,7 @@ const Hero = () => {
 
     return (
         <div className='h-screen w-full flex flex-col items-center justify-center relative'>
-            <KonamiCode />
-            <Toaster 
-                position="bottom-right"
-                toastOptions={{
-                    style: {
-                        background: 'rgba(0, 0, 0, 0.7)',
-                        backdropFilter: 'blur(8px)',
-                        color: '#fff',
-                        padding: '16px',
-                        borderRadius: '8px',
-                        fontSize: '1rem',
-                        border: '1px solid rgba(255, 255, 255, 0.1)',
-                    },
-                }}
-            />
+            <KonamiCode wrapperRef={wrapperRef} />
             <div className='flex flex-col px-5 md:px-32' ref={containerRef}>
                 <h1
                     ref={helloRef}

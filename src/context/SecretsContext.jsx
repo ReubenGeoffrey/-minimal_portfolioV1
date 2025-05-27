@@ -54,7 +54,7 @@ export const SecretsProvider = ({ children }) => {
             const foundCount = Object.values(foundSecrets).filter(Boolean).length + 1;
             
             const messages = {
-                persona: "Yohohohoho, you've a good observation haki!",
+                persona: "Yohohohoho, you have a good observation haki!",
                 konami: "Bankai!, Sakasama No Seikai",
                 footer: "Is this a hint ??, Boa Hancock!"
             };
@@ -65,7 +65,7 @@ export const SecretsProvider = ({ children }) => {
 
             if (foundCount === totalSecrets) {
                 setTimeout(() => {
-                    toast("🎉 CONGRATULATIONS! You've found all the secrets! You're a true explorer! 🎉", {
+                    toast("The One piece is reallll, you found it", {
                         duration: 6000,
                     });
                     triggerConfetti();

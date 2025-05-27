@@ -1,4 +1,4 @@
-import { github, linkedin, mail, resume} from '../utils'
+import { github, linkedin, mail, resume } from '../utils';
 
 export const navList = [
     { "name" : "github" , "link" : "https://github.com/adityaj08" , "logo": github, } ,
