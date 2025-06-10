@@ -4,7 +4,7 @@ A modern, interactive portfolio website built with React, Vite, and GSAP. Featur
 
 ## 🖼️ Preview
 
-![Portfolio Preview](/project.png)
+![Portfolio Preview](/Demo.png)
 
 ## 🌟 Features
 
@@ -90,5 +90,5 @@ Special thanks to:
 ---
 
 <div align="center">
-Made with ❤️ by Aditya Joshi
+Made with ❤️ by Geoffrey
 </div> #
