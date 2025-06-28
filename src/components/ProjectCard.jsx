@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
-import { SiReact, SiNodedotjs, SiMermaid, SiVercel, SiVite, SiSqlalchemy, SiPython, SiJavascript, SiTypescript, SiHtml5, SiCss3, SiGithub, SiMongodb, SiStreamlit, SiCloudinary, SiGreensock, SiUnity, SiUnrealengine, SiTensorflow, SiPandas, SiNumpy, SiScikitlearn, SiJupyter, SiTableau, SiPowerbi } from 'react-icons/si';
+import { SiReact, SiNodedotjs, SiMermaid, SiVercel, SiVite, SiSqlalchemy, SiPython, SiJavascript, SiTypescript, SiHtml5, SiCss3, SiGithub, SiMongodb, SiStreamlit, SiCloudinary, SiGreensock, SiUnity, SiUnrealengine, SiTensorflow, SiPandas, SiNumpy, SiScikitlearn, SiJupyter, SiTableau } from 'react-icons/si';
 import { FaDatabase, FaCode, FaLock, FaGamepad, FaChartBar, FaBrain } from 'react-icons/fa';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -43,7 +43,7 @@ const techIconMap = {
   sklearn: SiScikitlearn,
   jupyter: SiJupyter,
   tableau: SiTableau,
-  powerbi: SiPowerbi,
+  powerbi: FaChartBar,
   'data-analysis': FaChartBar,
   'machine-learning': FaBrain,
   ml: FaBrain,
