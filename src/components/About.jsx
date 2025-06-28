@@ -113,13 +113,19 @@ const About = () => {
         <div ref={addFadeRef} className='w-full bg-white bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm'>
           <span ref={addBlurRef} className='block text-xl md:text-2xl lg:text-4xl text-white font-space font-extralight'>
             As a final-year undergraduate pursuing a BTech degree in Computer Science and Engineering at Francis Xavier's Engineering College, Tirunelveli,
-            I'm actively on the lookout for full-time gigs and freelance projects.
+            I specialize in Software Development, Data Analysis, and Game Development.
           </span>
         </div>
         <div ref={addFadeRef} className='bg-white bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm'>
           <span ref={addBlurRef} className='block text-xl md:text-2xl lg:text-4xl text-white font-space font-extralight'>
-            When I'm not working, you'll catch me watching anime, reading random stuff,
-            or messing with some fun side projects.
+            I'm passionate about building scalable applications, extracting insights from data,
+            and creating immersive gaming experiences that captivate users.
+          </span>
+        </div>
+        <div ref={addFadeRef} className='bg-white bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm'>
+          <span ref={addBlurRef} className='block text-xl md:text-2xl lg:text-4xl text-white font-space font-extralight'>
+            When I'm not coding, you'll find me exploring new technologies, analyzing datasets,
+            or designing the next level of an indie game.
           </span>
         </div>
       </div>
@@ -136,6 +142,26 @@ const About = () => {
             ))}
           </div>
         </div>
+        
+        {/* Skills Section */}
+        <div ref={addFadeRef} className='bg-white bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm'>
+          <div className="py-2 text-2xl font-semibold text-zinc-700 md:text-[1.5vw] flex flex-col gap-5">
+            Core Skills
+            <div className='bg-black bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm flex flex-col gap-3'>
+              <span ref={addBlurRef} className='text-xl text-white font-popins font-semibold'>Software Development</span>
+              <span ref={addBlurRef} className='text-sm text-white opacity-70 font-popins font-light'>Full-Stack Development, API Design, System Architecture</span>
+            </div>
+            <div className='bg-black bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm flex flex-col gap-3'>
+              <span ref={addBlurRef} className='text-xl text-white font-popins font-semibold'>Data Analysis</span>
+              <span ref={addBlurRef} className='text-sm text-white opacity-70 font-popins font-light'>Statistical Analysis, Machine Learning, Data Visualization</span>
+            </div>
+            <div className='bg-black bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm flex flex-col gap-3'>
+              <span ref={addBlurRef} className='text-xl text-white font-popins font-semibold'>Game Development</span>
+              <span ref={addBlurRef} className='text-sm text-white opacity-70 font-popins font-light'>Unity, Unreal Engine, Game Design, Interactive Media</span>
+            </div>
+          </div>
+        </div>
+
         <a href="#_" ref={addBlurRef} className="bg-white bg-opacity-[0.01] h-[70px] w-[250px] relative hidden items-center justify-center px-6 py-3 overflow-hidden font-bold text-white rounded-md shadow-2xl group">
           <span className="absolute left-0 w-1/2 h-full transition duration-300 ease-out opacity-0 bg-gradient-to-r from-yellow-600 via-purple-700 to-blue-400 group-hover:opacity-100 blur-xl"></span>
           <span className="absolute left-1/2 w-1/2 h-full transition duration-300 ease-out opacity-0 bg-gradient-to-r from-blue-400 via-amber-700 to-red-400 group-hover:opacity-100 blur-xl"></span>

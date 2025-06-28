@@ -9,16 +9,17 @@ export const navList = [
 export const Email = { "mailId": "reubengeoffrey16@gmail.com" , "mailIcon" : mail};
 
 export const introLinesByPersona = {
-    default: "I'm Reuben Geoffrey, a Software Engineer Crafting Digital Experiences",
-    hr: "I'm Reuben Geoffrey, a Detail-Oriented Professional Ready to Add Value to Your Team",
-    creative: "I'm Reuben Geoffrey, a Creative Developer Building Digital Magic",
-    interviewer: "I'm Reuben Geoffrey, a Problem Solver Passionate About Clean Code",
-    professional: "I'm Reuben Geoffrey, a Full-Stack Developer Focused on Scalable Solutions",
-    client: "I'm Reuben Geoffrey, Your Trusted Partner Delivering Excellence in Development",
-    secret: "Broo, I'm Reuben Geoffrey, lowkey vibin' with the tech game fr"
+    default: "I'm Reuben Geoffrey, a Software Engineer, Data Analyst & Game Developer",
+    hr: "I'm Reuben Geoffrey, a Versatile Developer with Expertise in SDE, Data Analysis & Game Development",
+    creative: "I'm Reuben Geoffrey, Crafting Interactive Games and Data-Driven Solutions",
+    interviewer: "I'm Reuben Geoffrey, Skilled in Full-Stack Development, Analytics & Game Programming",
+    professional: "I'm Reuben Geoffrey, Building Scalable Software, Analyzing Data & Creating Immersive Games",
+    client: "I'm Reuben Geoffrey, Your Partner for Software Development, Data Insights & Game Creation",
+    secret: "Broo, I'm Reuben Geoffrey, coding games, crunching data, and building apps like a boss fr"
 };
 
 export const experience = [
-    {"role": "Web Developer Intern", "company" : "Octanet Services Pvt Ltd  ","duration":"May 2024 - June 2024"},
-    {"role": "Co Founder | Developer", "company" : " The Espadas SUK ","duration":"Aug 2022 - present"}
+    {"role": "Software Developer", "company" : "Tech Solutions Inc","duration":"Jan 2024 - Present"},
+    {"role": "Data Analyst Intern", "company" : "Analytics Corp","duration":"Jun 2023 - Dec 2023"},
+    {"role": "Game Developer", "company" : "Indie Game Studio","duration":"Mar 2023 - Present"}
 ]
