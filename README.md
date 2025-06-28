@@ -32,7 +32,7 @@ A modern, interactive portfolio website built with React, Vite, and GSAP. Featur
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/adityaj08/minimal-portfolio.git
+   git clone https://github.com/ReubenGeoffrey/portfolio.git
    cd portfolio
    ```
 
@@ -90,5 +90,5 @@ Special thanks to:
 ---
 
 <div align="center">
-Made with ❤️ by Geoffrey
-</div> #
+Made with ❤️ by Reuben Geoffrey
+</div>

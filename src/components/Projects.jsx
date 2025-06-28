@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from "react"
 import ProjectCard from "./ProjectCard"
 
-const GITHUB_USER = "adityaj08";
+const GITHUB_USER = "ReubenGeoffrey";
 const LOAD_COUNT = 5;
 
 const getProjectType = (repo) => {
@@ -132,4 +132,4 @@ const Projects = () => {
   )
 }
 
-export default Projects 
+export default Projects

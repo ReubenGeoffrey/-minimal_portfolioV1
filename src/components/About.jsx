@@ -112,13 +112,13 @@ const About = () => {
       <div className='h-full w-full md:w-2/4 flex flex-col gap-8 justify-center px-5 py-20'>
         <div ref={addFadeRef} className='w-full bg-white bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm'>
           <span ref={addBlurRef} className='block text-xl md:text-2xl lg:text-4xl text-white font-space font-extralight'>
-            As a final-year undergraduate pursuing a BTech degree in Computer Science and Engineering,
-            I`m actively on the lookout for full-time gigs and freelance projects.
+            As a final-year undergraduate pursuing a BTech degree in Computer Science and Engineering at Francis Xavier's Engineering College, Tirunelveli,
+            I'm actively on the lookout for full-time gigs and freelance projects.
           </span>
         </div>
         <div ref={addFadeRef} className='bg-white bg-opacity-[0.01] rounded-xl px-5 py-5 z-10 backdrop-blur-sm'>
           <span ref={addBlurRef} className='block text-xl md:text-2xl lg:text-4xl text-white font-space font-extralight'>
-            When I`m not working, you`ll catch me watching anime, reading random stuff,
+            When I'm not working, you'll catch me watching anime, reading random stuff,
             or messing with some fun side projects.
           </span>
         </div>
@@ -147,4 +147,4 @@ const About = () => {
   )
 }
 
-export default About 
+export default About
