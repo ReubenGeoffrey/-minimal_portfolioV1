@@ -19,7 +19,6 @@ export const introLinesByPersona = {
 };
 
 export const experience = [
-    {"role": "Software Developer", "company" : "Tech Solutions Inc","duration":"Jan 2024 - Present"},
-    {"role": "Data Analyst Intern", "company" : "Analytics Corp","duration":"Jun 2023 - Dec 2023"},
-    {"role": "Game Developer", "company" : "Indie Game Studio","duration":"Mar 2023 - Present"}
+    {"role": "Java Full Stack Intern", "company" : "Wipro","duration":"Nov 2024 - Feb 2025"},
+    {"role": "Data Analyst (Top Rated)", "company" : "Fiverr","duration":"July 2022 - Present"}
 ]
